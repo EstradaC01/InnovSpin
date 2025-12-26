@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  raffle-app:
+    build: .
+    container_name: innovspin-raffle-app
+    ports:
+      - "8050:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true
+
