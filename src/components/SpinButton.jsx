@@ -9,7 +9,7 @@ export default function SpinButton({ onClick, disabled, isSpinning }) {
       whileHover={!disabled && !isSpinning ? { scale: 1.05 } : {}}
       whileTap={!disabled && !isSpinning ? { scale: 0.95 } : {}}
       className={`
-        relative px-14 py-6 rounded-2xl font-bold text-2xl text-white uppercase tracking-wider
+        relative rounded-full font-bold text-2xl text-white uppercase tracking-wider
         transition-all duration-300 overflow-hidden
         ${disabled || isSpinning
           ? 'bg-gray-500/50 cursor-not-allowed'
@@ -17,8 +17,11 @@ export default function SpinButton({ onClick, disabled, isSpinning }) {
         }
       `}
       style={!disabled && !isSpinning ? {
+        padding: '32px 64px',
         boxShadow: '0 0 30px rgba(214, 90, 32, 0.5), 0 10px 40px rgba(214, 90, 32, 0.3)'
-      } : {}}
+      } : {
+        padding: '32px 64px'
+      }}
     >
       {/* Animated background shimmer */}
       {!disabled && !isSpinning && (
@@ -47,7 +50,7 @@ export default function SpinButton({ onClick, disabled, isSpinning }) {
       {/* Pulse effect when enabled */}
       {!disabled && !isSpinning && (
         <motion.div
-          className="absolute inset-0 rounded-2xl"
+          className="absolute inset-0 rounded-full"
           animate={{
             boxShadow: [
               '0 0 0 0 rgba(214, 90, 32, 0.4)',

@@ -10,7 +10,9 @@ const SpinningWheel = forwardRef(({
   isSpinning,
   onFileUpload,
   onClearData,
-  hasData
+  hasData,
+  onIndividualSpin,
+  canSpinIndividually
 }, ref) => {
   const controls = useAnimation();
   const [rotation, setRotation] = useState(0);
@@ -297,15 +299,46 @@ const SpinningWheel = forwardRef(({
         />
       </motion.div>
 
-      {/* Center decoration */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-navy-deep border-3 border-burnt-orange flex items-center justify-center pointer-events-none z-10"
-        style={{ boxShadow: '0 0 20px rgba(214, 90, 32, 0.5)' }}
-      >
-        <span className="text-xs font-bold text-burnt-orange uppercase">
-          {type === 'participants' ? 'WHO' : 'WIN'}
-        </span>
-      </div>
+      {/* Center button - clickable for individual spin */}
+      {onIndividualSpin ? (
+        <motion.button
+          whileHover={canSpinIndividually && !localSpinning && !isSpinning ? { scale: 1.1 } : {}}
+          whileTap={canSpinIndividually && !localSpinning && !isSpinning ? { scale: 0.9 } : {}}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (canSpinIndividually && !localSpinning && !isSpinning) {
+              onIndividualSpin();
+            }
+          }}
+          disabled={!canSpinIndividually || localSpinning || isSpinning}
+          className={`
+            absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full 
+            border-3 border-burnt-orange flex items-center justify-center z-20 transition-all
+            ${canSpinIndividually && !localSpinning && !isSpinning
+              ? 'bg-navy-deep cursor-pointer hover:bg-burnt-orange/20 active:scale-95'
+              : 'bg-navy-deep/80 cursor-not-allowed opacity-70'
+            }
+          `}
+          style={{ boxShadow: '0 0 20px rgba(214, 90, 32, 0.5)' }}
+          title={canSpinIndividually && !localSpinning && !isSpinning 
+            ? `Spin ${type === 'participants' ? 'Participants' : 'Prizes'} Wheel`
+            : undefined
+          }
+        >
+          <span className="text-xs font-bold text-burnt-orange uppercase">
+            {type === 'participants' ? 'WHO' : 'WIN'}
+          </span>
+        </motion.button>
+      ) : (
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-navy-deep border-3 border-burnt-orange flex items-center justify-center pointer-events-none z-10"
+          style={{ boxShadow: '0 0 20px rgba(214, 90, 32, 0.5)' }}
+        >
+          <span className="text-xs font-bold text-burnt-orange uppercase">
+            {type === 'participants' ? 'WHO' : 'WIN'}
+          </span>
+        </div>
+      )}
 
       {/* Glow effect when selected */}
       {selectedItem && !localSpinning && !isSpinning && (
@@ -323,9 +356,9 @@ const SpinningWheel = forwardRef(({
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-burnt-orange/20 border border-burnt-orange/30"
+        className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-burnt-orange/20 border border-burnt-orange/30"
       >
-        <span className="text-xs font-medium text-burnt-orange">
+        <span className="text-base font-medium text-burnt-orange">
           {items.length} {type === 'participants' ? 'participants' : 'prizes'}
         </span>
       </motion.div>
