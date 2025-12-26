@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Gift, User, X, PartyPopper } from 'lucide-react';
+import { Gift, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function WinnerModal({ isOpen, winner, prize, onClose }) {
@@ -66,180 +66,206 @@ export default function WinnerModal({ isOpen, winner, prize, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          onClick={onClose}
         >
-          {/* Backdrop */}
+          {/* Dark blurred backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
           />
 
-          {/* Modal */}
+          {/* Legendary Item Drop Modal */}
           <motion.div
-            initial={{ scale: 0.5, opacity: 0, y: 50 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.5, opacity: 0, y: 50 }}
-            transition={{ type: 'spring', damping: 15, stiffness: 200 }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{
+              type: 'spring',
+              damping: 12,
+              stiffness: 150,
+              mass: 0.8
+            }}
             onClick={(e) => e.stopPropagation()}
-            className="relative glass-dark rounded-3xl p-8 max-w-lg w-full mx-4 overflow-hidden"
+            className="relative rounded-3xl p-12 max-w-4xl w-full mx-4 overflow-hidden"
             style={{
-              boxShadow: '0 0 40px rgba(214, 90, 32, 0.3), 0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+              background: 'rgba(24, 43, 73, 0.85)',
+              border: '2px solid rgba(255, 255, 255, 0.3)',
+              boxShadow: '0 0 60px rgba(255, 255, 255, 0.2), 0 0 100px rgba(214, 90, 32, 0.4), 0 25px 50px -12px rgba(0, 0, 0, 0.8)',
+              backdropFilter: 'blur(20px)'
             }}
           >
-            {/* Close button */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={onClose}
-              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-            >
-              <X className="w-5 h-5 text-white" />
-            </motion.button>
-
-            {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-burnt-orange via-yellow-500 to-burnt-orange" />
+            {/* Animated glow border effect */}
             <motion.div
               animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 5, -5, 0]
+                opacity: [0.5, 1, 0.5],
               }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="absolute -top-10 -right-10 w-40 h-40 bg-burnt-orange/10 rounded-full blur-3xl"
+              className="absolute inset-0 rounded-2xl"
+              style={{
+                background: 'linear-gradient(45deg, transparent, rgba(214, 90, 32, 0.3), transparent)',
+                filter: 'blur(20px)',
+                zIndex: -1
+              }}
             />
+
+            {/* Decorative corner accents */}
+            <div className="absolute top-0 left-0 w-20 h-20 border-t-4 border-l-4 border-yellow-400/50 rounded-tl-2xl" />
+            <div className="absolute top-0 right-0 w-20 h-20 border-t-4 border-r-4 border-yellow-400/50 rounded-tr-2xl" />
+            <div className="absolute bottom-0 left-0 w-20 h-20 border-b-4 border-l-4 border-yellow-400/50 rounded-bl-2xl" />
+            <div className="absolute bottom-0 right-0 w-20 h-20 border-b-4 border-r-4 border-yellow-400/50 rounded-br-2xl" />
 
             {/* Content */}
             <div className="relative text-center">
-              {/* Trophy icon */}
+              {/* CONGRATULATIONS Header */}
               <motion.div
-                initial={{ y: -20, opacity: 0 }}
+                initial={{ y: -30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="flex justify-center mb-4"
+                transition={{ delay: 0.2, type: 'spring' }}
+                className="mb-12"
               >
-                <motion.div
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 1 }}
-                  className="p-4 rounded-full bg-gradient-to-br from-yellow-400 to-burnt-orange"
-                  style={{ boxShadow: '0 0 30px rgba(214, 90, 32, 0.5)' }}
+                <motion.h2
+                  className="text-5xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_0_15px_rgba(255,215,0,0.8)]"
+                  animate={{
+                    textShadow: [
+                      '0 0 20px rgba(255, 215, 0, 0.8)',
+                      '0 0 30px rgba(255, 215, 0, 1)',
+                      '0 0 20px rgba(255, 215, 0, 0.8)',
+                    ]
+                  }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <Trophy className="w-10 h-10 text-white" />
-                </motion.div>
+                  CONGRATULATIONS!
+                </motion.h2>
               </motion.div>
 
-              {/* Congratulations text */}
+              {/* Prize Image - The FOCUS */}
               <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
+                initial={{ scale: 0, rotateY: -180 }}
+                animate={{ scale: 1, rotateY: 0 }}
+                transition={{
+                  delay: 0.4,
+                  type: 'spring',
+                  damping: 10,
+                  stiffness: 100
+                }}
+                className="mb-12 flex justify-center"
               >
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <PartyPopper className="w-6 h-6 text-yellow-400" />
-                  <h2 className="text-2xl font-bold text-white">Congratulations!</h2>
-                  <PartyPopper className="w-6 h-6 text-yellow-400 transform scale-x-[-1]" />
-                </div>
-                <p className="text-white/60 text-sm">We have a winner!</p>
-              </motion.div>
+                <div className="relative">
+                  {/* Rotating glow effect behind image */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                    className="absolute inset-0 rounded-3xl"
+                    style={{
+                      background: 'conic-gradient(from 0deg, transparent, rgba(214, 90, 32, 0.6), transparent, rgba(255, 215, 0, 0.6), transparent)',
+                      filter: 'blur(30px)',
+                      transform: 'scale(1.3)',
+                      zIndex: -1
+                    }}
+                  />
 
-              {/* Winner info */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10"
-              >
-                <div className="flex items-center gap-2 justify-center text-burnt-orange mb-2">
-                  <User className="w-5 h-5" />
-                  <span className="text-sm font-medium uppercase tracking-wider">Winner</span>
-                </div>
-                <div className="flex flex-col items-center gap-3">
-                  {winner.imageUrl ? (
-                    <motion.img
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', delay: 0.5 }}
-                      src={winner.imageUrl}
-                      alt={winner.name}
-                      className="w-20 h-20 rounded-full object-cover border-3 border-burnt-orange"
-                      style={{ boxShadow: '0 0 20px rgba(214, 90, 32, 0.4)' }}
-                    />
-                  ) : (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', delay: 0.5 }}
-                      className="w-20 h-20 rounded-full bg-gradient-to-br from-navy-light to-navy-deep flex items-center justify-center border-3 border-burnt-orange"
-                    >
-                      <span className="text-3xl font-bold text-white">
-                        {winner.name.charAt(0).toUpperCase()}
-                      </span>
-                    </motion.div>
-                  )}
-                  <motion.h3
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                    className="text-2xl font-bold text-white glow-text"
-                  >
-                    {winner.name}
-                  </motion.h3>
-                </div>
-              </motion.div>
-
-              {/* Prize info */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="mt-4 p-4 rounded-2xl bg-burnt-orange/10 border border-burnt-orange/30"
-              >
-                <div className="flex items-center gap-2 justify-center text-burnt-orange mb-2">
-                  <Gift className="w-5 h-5" />
-                  <span className="text-sm font-medium uppercase tracking-wider">Prize Won</span>
-                </div>
-                <div className="flex flex-col items-center gap-3">
                   {prize.imageUrl ? (
                     <motion.img
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', delay: 0.6 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.5 }}
                       src={prize.imageUrl}
                       alt={prize.name}
-                      className="w-24 h-24 rounded-xl object-cover border-2 border-burnt-orange/50"
+                      className="w-80 h-80 rounded-2xl object-cover"
+                      style={{
+                        boxShadow: '0 0 40px rgba(214, 90, 32, 0.8), 0 0 80px rgba(214, 90, 32, 0.4)',
+                        border: '3px solid rgba(214, 90, 32, 0.6)'
+                      }}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
                     />
-                  ) : (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', delay: 0.6 }}
-                      className="w-16 h-16 rounded-xl bg-gradient-to-br from-burnt-orange to-burnt-orange-dark flex items-center justify-center"
-                    >
-                      <Gift className="w-8 h-8 text-white" />
-                    </motion.div>
-                  )}
-                  <motion.h3
+                  ) : null}
+
+                  {/* Fallback Gift Box Icon */}
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.7 }}
-                    className="text-xl font-bold text-burnt-orange"
+                    transition={{ delay: 0.5 }}
+                    className="w-80 h-80 rounded-2xl bg-gradient-to-br from-burnt-orange via-burnt-orange-light to-yellow-500 flex items-center justify-center"
+                    style={{
+                      display: prize.imageUrl ? 'none' : 'flex',
+                      boxShadow: '0 0 40px rgba(214, 90, 32, 0.8), 0 0 80px rgba(214, 90, 32, 0.4)',
+                      border: '3px solid rgba(214, 90, 32, 0.6)'
+                    }}
                   >
-                    {prize.name}
-                  </motion.h3>
+                    <Gift className="w-40 h-40 text-white drop-shadow-2xl" strokeWidth={1.5} />
+                  </motion.div>
+
+                  {/* Particle effects around image */}
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute -inset-4 rounded-3xl bg-burnt-orange/20 blur-2xl -z-10"
+                  />
                 </div>
               </motion.div>
 
-              {/* Close button */}
+              {/* Winner Name */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="mb-8"
+              >
+                <p className="text-sm text-white/50 uppercase tracking-widest mb-3">Winner</p>
+                <h3 className="text-4xl font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                  {winner.name}
+                </h3>
+              </motion.div>
+
+              {/* Prize Name */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.7 }}
+                className="mb-10"
+              >
+                <p className="text-sm text-burnt-orange/70 uppercase tracking-widest mb-3">Prize</p>
+                <h4 className="text-2xl font-bold text-burnt-orange drop-shadow-[0_0_8px_rgba(214,90,32,0.6)]">
+                  {prize.name}
+                </h4>
+              </motion.div>
+
+              {/* Close Button */}
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.8 }}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: '0 0 30px rgba(214, 90, 32, 0.8), 0 0 60px rgba(214, 90, 32, 0.4)'
+                }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onClose}
-                className="mt-6 px-8 py-3 bg-gradient-to-r from-burnt-orange to-burnt-orange-light rounded-xl text-white font-bold shadow-lg hover:shadow-burnt-orange/30 transition-shadow"
+                className="px-12 py-4 bg-gradient-to-r from-burnt-orange via-burnt-orange-light to-burnt-orange rounded-xl text-white font-black text-lg uppercase tracking-wider relative overflow-hidden group"
+                style={{
+                  boxShadow: '0 0 20px rgba(214, 90, 32, 0.6), 0 10px 30px rgba(0, 0, 0, 0.5)',
+                  border: '2px solid rgba(255, 255, 255, 0.2)'
+                }}
               >
-                Continue
+                <motion.div
+                  animate={{
+                    x: ['-100%', '100%']
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'linear'
+                  }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                />
+                <span className="relative z-10">Close</span>
               </motion.button>
             </div>
 
