@@ -174,8 +174,23 @@ function App() {
     
     // Elimination Mode: Remove the winner and prize from their respective arrays
     if (winner && prize) {
-      setParticipants(prev => prev.filter(p => p.name !== winner.name));
-      setPrizes(prev => prev.filter(p => p.name !== prize.name));
+      // Remove only the first matching participant
+      setParticipants(prev => {
+        const index = prev.findIndex(p => p.name === winner.name);
+        if (index > -1) {
+          return [...prev.slice(0, index), ...prev.slice(index + 1)];
+        }
+        return prev;
+      });
+      
+      // Remove only the first matching prize
+      setPrizes(prev => {
+        const index = prev.findIndex(p => p.name === prize.name);
+        if (index > -1) {
+          return [...prev.slice(0, index), ...prev.slice(index + 1)];
+        }
+        return prev;
+      });
       
       // Reset spin results for next round
       setSpinResults({ participant: null, prize: null });
