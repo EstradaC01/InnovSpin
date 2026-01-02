@@ -136,9 +136,17 @@ const SpinningWheel = forwardRef(({
       setRotation(finalRotation);
 
       // Calculate winning segment
-      // The pointer is at the top (0 degrees), segments start from -90 degrees
-      const pointerAngle = (360 - (normalizedRotation % 360) + 90) % 360;
-      const winningIndex = Math.floor(pointerAngle / segmentAngle) % items.length;
+      // The pointer is fixed at 12 o'clock (270° in canvas terms, or -90°)
+      // Segments are drawn starting at -90° (index 0) going clockwise
+      // When wheel rotates clockwise by R degrees, segment that was at angle A is now at A + R
+      // To find which segment is under the pointer at 270°:
+      // We need the segment whose original position + rotation = 270° (mod 360)
+      // Original position = 270° - R = (270 - normalizedRotation) mod 360
+      // Since segment 0 starts at 270° (i.e., -90°), we calculate the offset from there
+      // Offset from segment 0 start = (360 - normalizedRotation) mod 360
+      // This gives us how far clockwise from segment 0's start the pointer effectively points
+      const effectiveAngle = ((360 - normalizedRotation) % 360 + 360) % 360;
+      const winningIndex = Math.floor(effectiveAngle / segmentAngle) % items.length;
       const winner = items[winningIndex];
 
       setSelectedItem(winner);
