@@ -1,16 +1,80 @@
-# React + Vite
+# WhirlWin - Raffle Spin the Wheel System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive raffle system featuring dual spinning wheels for selecting participants and prizes. Built with React, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Dual Spinning Wheels** - Separate wheels for participants and prizes
+- **CSV Upload** - Upload participant and prize lists via CSV files
+- **Manual Entry** - Add participants and prizes manually through a modal interface
+- **Visual Feedback** - Animated spinning wheels with confetti celebration on win
+- **Elimination Mode** - Automatically removes winners from the pool after each spin
+- **Responsive Design** - Works on desktop and mobile devices
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js (v18 or higher)
+- npm or yarn
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+## CSV Format
+
+### Participants CSV
+```csv
+ID,Name
+1,John Doe
+2,Jane Smith
+3,Bob Wilson
+```
+
+### Prizes CSV
+```csv
+ID,PrizeName
+1,Grand Prize
+2,Second Prize
+3,Third Prize
+```
+
+## Usage
+
+1. Upload a participants CSV file or add them manually via the settings button
+2. Upload a prizes CSV file or add them manually
+3. Click the "SPIN" button to select a winner
+4. The winner and prize will be displayed in a celebration modal
+5. After closing the modal, the winner is automatically removed from the pool
+
+## Tech Stack
+
+- React
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Papa Parse (CSV parsing)
+- Canvas Confetti
+- Lucide React (icons)
