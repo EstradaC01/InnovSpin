@@ -109,7 +109,7 @@ const SpinningWheel = forwardRef(({
     ctx.lineWidth = 4;
     ctx.stroke();
 
-  }, [items, size, segmentAngle, centerX, centerY, radius]);
+  }, [items, size, segmentAngle, centerX, centerY, radius]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const spin = useCallback((targetRotation) => {
     if (localSpinning || items.length === 0) return;
@@ -224,24 +224,24 @@ const SpinningWheel = forwardRef(({
           whileTap={{ scale: 0.98 }}
           className={`
             flex flex-col items-center justify-center rounded-full cursor-pointer
-            border-4 border-dashed transition-all duration-300
+            border-4 border-dashed transition-all duration-300 glow-wheel
             ${isDragOver
-              ? 'border-burnt-orange bg-burnt-orange/10'
-              : 'border-white/20 hover:border-burnt-orange/50 glass'
+              ? 'border-amber-400 bg-amber-400/10'
+              : 'border-white/20 hover:border-amber-400/50 glass'
             }
           `}
           style={{ width: size, height: size }}
         >
           <motion.div
             animate={isDragOver ? { scale: 1.1 } : { scale: 1 }}
-            className="p-4 rounded-full bg-burnt-orange/20 mb-3"
+            className="p-5 rounded-full bg-amber-400/20 mb-4"
           >
-            <Upload className="w-8 h-8 text-burnt-orange" />
+            <Upload className="w-10 h-10 text-amber-400" />
           </motion.div>
-          <p className="text-white/70 text-sm font-medium">
+          <p className="text-white/80 text-base font-medium px-4 text-center">
             {type === 'participants' ? 'Upload Participants' : 'Upload Prizes'}
           </p>
-          <p className="text-white/40 text-xs mt-1">
+          <p className="text-white/40 text-sm mt-2">
             Click or drag CSV file
           </p>
         </motion.div>
